@@ -1,4 +1,5 @@
 /////////////////////(setup)//////////////////////
+
 // install operating system that support ros2 
 // install git
 // install VS "code"
@@ -10,12 +11,14 @@
 
 
 ///////////////////////(GitHub)//////////////////////
+
 project name "Sanad_dev"
 git clone git@github.com:sanad39/project.git
 colcon build --symlink-install
 
 
 ///////////////////(launch Gazebo)/////////////////////////
+
 sudo apt install ros-humble-xacro ros-humble-joint-state-publisher-gui
 source install/setup.bash
 ros2 launch sanad rsp.launch.py 
@@ -28,6 +31,7 @@ rviz2
 
 
 //////// (before add gazebo file)** no need for this now I added a launch file  )///////
+
 ros2 launch gazebo_ros gazebo.launch.py 
 ros2 run gazebo_ros spawn_entity.py -topic robot_description -entity sanad
 ros2 run joint_state_publisher_gui joint_state_publisher_gui 
@@ -36,6 +40,7 @@ ros2 launch sanad launch_sim.launch.py world:=./src/sanad/worlds/obstacles.world
 
 
 ///////////////(to test the model)/////////////////
+
 source install/setup.bash 
 ros2 launch sanad launch_sim.launch.py world:=./src/sanad/worlds/obstacles.world
 ros2 run teleop_twist_keyboard teleop_twist_keyboard
@@ -45,6 +50,7 @@ rqt_graph
 
 
 ///////////////////( push update to git )////////////////////////
+
 cd ~/sanad_ws/src/sanad/
 git status
 git add .
@@ -56,6 +62,7 @@ git pull origin main
 
 
 ///////////////////( camera driver )////////////////////////
+
 cd ~/sanad_ws/src
 git clone https://github.com/IntelRealSense/realsense-ros.git
 cd realsense-ros
@@ -69,14 +76,17 @@ ros2 topic list
 
 
 ///////////////////( laser RPLIDAR setup )////////////////////////
+
 sudo apt install ros-humble-rplidar-ros
 
 
 ///////////////////( run the driver )////////////////////////
+
 ros2 run rplidar_ros rplidar_composition --ros-args -p serial_port:=/dev/ttyUSB0 -p frame_id:=lidar_link -p angle_compensate:=true -p scan_mode:=Standard
 
 
 ///////////////////(  laser rplidar driver setup )////////////////////////
+
 cd ~/robot_ws/src
 git clone git@github.com:babakhani/rplidar_ros2.git             //Clone the RPLIDAR ROS2 Package
 cd ~/robot_ws
@@ -89,10 +99,12 @@ sudo usermod -aG dialout $USER                                  // Additional No
 
 
 ///////////////////( to test the node with rviz2 )////////////////////////
+
 ros2 run rplidar_ros rplidar_composition
 
 
 ///////////////// to stop the motor to save battery ////////////////
+
 ros2 service call /stop_motor std_srvs/srv/Empty 
 ros2 service call /start_motor std_srvs/srv/Empty 
 
@@ -102,6 +114,7 @@ install software on Raspberry pi -git -openssh -vs code -network to sync -instal
 
 
 ///////////////////(  Intel® RealSense™ Depth Camera D435i setup  )////////////////////////
+
 sudo apt-get install git libssl-dev libusb-1.0-0-dev pkg-config libgtk-3-dev -y
 sudo apt-get install libglfw3-dev libgl1-mesa-dev libglu1-mesa-dev -y
 //Install the RealSense™ SDK
@@ -126,6 +139,7 @@ rviz2
 
 
 /////////////////////// motor ////////////////
+
 ros2 run vesc_py_interface vesc_controller
 
 
